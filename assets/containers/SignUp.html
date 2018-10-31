@@ -24,6 +24,7 @@
 	<form class="form-signin">
 		<input id="CPF" class="form-control" placeholder="CPF">
 		<input id="name" class="form-control" placeholder="Nome">
+		<input id="password" class="form-control" placeholder="Senha">
 		<input id="dateOfBirth" class="form-control" placeholder="Data de nascimento">
 		<label>Tipo de Usuario: </label>
 		<select id="userType" placeholder="Tipo" onchange="changeContainer(this)">
@@ -32,7 +33,7 @@
 			<option value="employee">Funcionario</option>
 		</select>
 		<div id="container"></div>
-		<button class="btn btn-lg btn-primary btn-block form-control" type="submit" onclick="signUp(this)">Cadastrar</button>
+		<button class="btn btn-lg btn-primary btn-block form-control" onclick="signUp(this)">Cadastrar</button>
 	</form>
 </body>
 </html>

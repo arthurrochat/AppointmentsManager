@@ -1,3 +1,4 @@
+const host = 'http://127.0.0.1:7200'
 
 function changeContainer(elm) {
 	const container = document.getElementById('container')
@@ -66,6 +67,9 @@ function elementBuilder(elm, attrs){
 	return newElm
 }
 
-function signUp(this){
-	axios.get
+function signUp(){
+	let url = `${host}/signUp`
+	let data = 'user=2&password=3'
+	
+	axios.post(url, data)
 }
