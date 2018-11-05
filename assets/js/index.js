@@ -1,4 +1,4 @@
-
+const host = 'http://127.0.0.1:7200'
 
 function signUp(){
 	let user = document.getElementById('CPF').value

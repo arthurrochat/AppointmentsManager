@@ -68,8 +68,38 @@ function elementBuilder(elm, attrs){
 }
 
 function signUp(){
-	let url = `${host}/signUp`
-	let data = 'user=2&password=3'
-	
-	axios.post(url, data)
+	let data = buildRow()
+	data && axios.post(`${host}/signUp`, data)
+}
+
+function buildRow(){
+	let type = document.getElementById("userType").value
+	if(type){
+		let row = {
+			cpf: document.getElementById("CPF").value,
+			name: document.getElementById("name").value,
+			password: document.getElementById("password").value,
+			birth: document.getElementById("dateOfBirth").value,
+			expirationDate: document.getElementById("expirationDate").value,
+			type: type
+		}
+		if(type === 'employee'){
+			row['career'] = document.getElementById('career').value
+			row['workPermit'] = document.getElementById('workPermit').value
+			row['salary'] = document.getElementById('salary').value
+		} else if(type === 'pacient'){
+			row['plan'] = document.getElementById('plan').value
+			row['planType'] = document.getElementById('planType').value
+			row['planCode'] = document.getElementById('planCode').value
+		}
+
+		return format(row)		
+	}
+	document.alert("Escolha um tipo")
+}
+
+function format(row){
+	let data = ''
+	Object.keys(row).forEach(key => data = `${data}${key}=${row[key]}&`)
+	return data.slice(0, -1)
 }

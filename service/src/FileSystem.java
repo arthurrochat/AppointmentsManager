@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class FileSystem<T> {
 	
-	void write(String data) {
+	void write(String data, String path) {
 		try {
-			FileWriter fileWriter = new FileWriter("users.txt", true);
+			FileWriter fileWriter = new FileWriter(path, true);
 			BufferedWriter writer = new BufferedWriter(fileWriter);
 			writer.write(data);
 			writer.newLine();
@@ -20,9 +20,9 @@ public class FileSystem<T> {
 		}
 	}
 	
-	void write(ArrayList<String> data) {
+	void write(ArrayList<String> data, String path) {
 		try {
-			FileWriter fileWriter = new FileWriter("users.txt", false);
+			FileWriter fileWriter = new FileWriter(path, false);
 			BufferedWriter writer = new BufferedWriter(fileWriter);
 			for(String row : data) {
 				writer.write(row);
@@ -34,11 +34,11 @@ public class FileSystem<T> {
 		}
 	}
 	
-	ArrayList<String> read() {
+	ArrayList<String> read(String path) {
 		ArrayList<String> data = new ArrayList();
 		String line;
 		try {
-			FileReader fi = new FileReader("users.txt");
+			FileReader fi = new FileReader(path);
 			BufferedReader reader = new BufferedReader(fi);
 			line = reader.readLine();
 			while(line != null) {

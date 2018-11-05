@@ -3,29 +3,34 @@ import java.util.ArrayList;
 public class UserDAO implements DAO<User>{
 	
 	private FileSystem fs = new FileSystem();
+	private String path; 
 	
-	public User get(String id) {
+	UserDAO(String path){
+		this.path = path;
+	}
+	
+	public String get(String id) {
 		String data = "";
-		ArrayList<String> users = fs.read();
+		ArrayList<String> users = fs.read(path);
 		for(String user : users) {
 			data = getIdFromRawContent(user).equals(id) ? user : data;
 		}
-		return createUserByRawContent(data);
+		return data;
 	}
 	
 	public void save(User user) {
-		fs.write(formatData(user.getUser(), user.getPassword()));
+		fs.write(user.getFormatedData(), path);
 	}
 	
 	public void update(User user) {
 		String row = "";
 		String id = user.getUser();
-		ArrayList<String> users = fs.read();
+		ArrayList<String> users = fs.read(path);
 		for(int i = 0; i < users.size(); i++) {
 			if(getIdFromRawContent(users.get(i)).equals(id)) {
 				users.remove(i);
-				users.add(i, formatData(user.getUser(), user.getPassword()));
-				fs.write(users);
+				users.add(i, user.getFormatedData());
+				fs.write(users, path);
 				return;
 			}
 		}	
@@ -34,11 +39,11 @@ public class UserDAO implements DAO<User>{
 	public void delete(User user) {
 		String row = "";
 		String id = user.getUser();
-		ArrayList<String> users = fs.read();
+		ArrayList<String> users = fs.read(path);
 		for(int i = 0; i < users.size(); i++) {
 			if(getIdFromRawContent(users.get(i)).equals(id)) {
 				users.remove(i);
-				fs.write(users);
+				fs.write(users, path);
 				return;
 			}
 		}
@@ -47,15 +52,6 @@ public class UserDAO implements DAO<User>{
 	
 	public String getIdFromRawContent(String data) {
 		return data.split(":")[0];
-	}
-	
-	public User createUserByRawContent(String data) {
-		String[] parsedData = data.split(":");
-		return new User(parsedData[0], parsedData[1]);
-	}
-	
-	public String formatData(String user, String password) {
-		return user + ":" + password; 
 	}
 	
 	
