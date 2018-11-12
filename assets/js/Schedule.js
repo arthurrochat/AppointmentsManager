@@ -27,10 +27,10 @@ function FactoryXMLHttpRequest() {
 	} else throw new Error("Could not instantiate XMLHttpRequest");
 }
 
-function login(){
+function schedule(){
 	var xmlhttp = new FactoryXMLHttpRequest();
-	let data = `login=${document.getElementById("cpf").value}&senha=${document.getElementById("password").value}`;
-	xmlhttp.open('post', `${host}/testaLogin`, true);
+	let data = `cpf=${document.getElementById("cpf").value}&date=${document.getElementById("dataConsulta").value}`;
+	xmlhttp.open('post', `${host}/Agendar`, true);
 	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');				
 	
 	xmlhttp.onload = function () {
@@ -38,15 +38,11 @@ function login(){
 			let jsonObj = JSON.parse(xmlhttp.responseText);
 			
 			if(jsonObj.status == 0){
-				document.getElementById("teste").innerHTML = jsonObj.nome;
-				sessionStorage.setItem("YourHealthLogin", document.getElementById("cpf").value);
-				sessionStorage.setItem("YourHealthSenha", document.getElementById("password").value);
-				window.location = "Perfil.html";
+				document.getElementById("teste").innerHTML = "Sucesso ao marcar consulta";
 			}
-			else if(jsonObj.status == 1)
-				document.getElementById("teste").innerHTML = "Senha invalida";
-			else
-				document.getElementById("teste").innerHTML = "Login não cadastrado";
+			else{
+				document.getElementById("teste").innerHTML = "Falha ao marcar consulta";
+			}
 		}
 	};
 	

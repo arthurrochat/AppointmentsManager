@@ -11,22 +11,12 @@
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body class="text-center">
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item">
-				<a href="" class="nav-link active">Login </a>
-			</li>
-			<li class="nav-item">
-				<a href="SignUp.html" class="nav-link">Cadastrar </a>
-			</li>
-		</ul>
-	</nav>
 	<form class="form-signin">
-		<h1 class="h3 mb-3 font-weight-normal">Acesse sua conta: </h1>
-		<input id="CPF" type="text" name="user" class="form-control" placeholder="CPF">
+		<h1 class="h3 mb-3 font-weight-normal">Acesse sua conta: <label id="teste"></label></h1>
+		<input id="cpf" type="text" name="user" class="form-control" placeholder="CPF">
 		<input id="password" type="password" name="password" class="form-control" placeholder="Senha">
 		<br>
-		<button class="btn btn-lg btn-primary btn-block" onclick="login()">Logar</button>
+		<input type="button" class="btn btn-lg btn-primary btn-block" id="btnCadastrar" value="Login" onclick="login()">
 	</form>
 </body>
 </html>

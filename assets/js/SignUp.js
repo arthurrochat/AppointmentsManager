@@ -1,61 +1,99 @@
 const host = 'http://127.0.0.1:7200'
 
+function FactoryXMLHttpRequest() {
+	if(window.XMLHttpRequest) {
+		return new XMLHttpRequest();// Opera 8.0+, Firefox, Chrome, Safari
+	}
+	else if (window.XDomainRequest) {
+		return new XDomainRequest(); // Antigo Safari
+	}
+	else if(window.ActiveXObject) {
+		var msxmls = new Array(// Internet Explorer
+		'Msxml2.XMLHTTP',
+		'Microsoft.XMLHTTP',
+		'Msxml3.XMLHTTP',
+		'Msxml2.XMLHTTP.7.0',
+		'Msxml2.XMLHTTP.6.0',
+		'Msxml2.XMLHTTP.5.0',
+		'Msxml2.XMLHTTP.4.0',
+		'Msxml2.XMLHTTP.3.0');
+		for (var i = 0; i < msxmls.length; i++) {
+			try {
+				return new ActiveXObject(msxmls[i]);
+			} catch (e) {
+			}
+		}
+	} else throw new Error("Could not instantiate XMLHttpRequest");
+}
+
 function changeContainer(elm) {
 	const container = document.getElementById('container')
 	container.innerHTML = ''
 	if(elm.value){
-		elm.value === 'employee' ? appendEmployeeForm(container) : appendPacientForm(container)
-
-		let expirationDate = elementBuilder('input', {
-			class: 'form-control',
-			placeholder: 'Data de Validade',
-			id: 'expirationDate'
-		})		
-		container.append(expirationDate)
+		elm.value === '2' ? appendEmployeeForm(container) : appendPacientForm(container)
 	}
-		
 }
 
 function appendEmployeeForm(container){
-	let career = elementBuilder('input', {
+	let profissao = elementBuilder('input', {
 		class: 'form-control',
+		type: 'text',
 		placeholder: 'Profissão',
-		id: 'career'
+		id: 'profissao'
 	})
-	let workPermit = elementBuilder('input', {
+	let carteiraTrabalho = elementBuilder('input', {
 		class: 'form-control',
+		type: 'text',
 		placeholder: 'Carteira de Trabalho',
-		id: 'workPermit'
+		id: 'carteiraTrabalho'
 	})
-	let salary = elementBuilder('input', {
+	let salario = elementBuilder('input', {
 		class: 'form-control',
+		type: 'text',
 		placeholder: 'Salário',
-		id: 'salary'
+		id: 'salario'
 	})
-	container.append(career)
-	container.append(workPermit)
-	container.append(salary)	
+	let dataAdmissao = elementBuilder('input', {
+		class: 'form-control',
+		type: 'date',
+		id: 'dataAdmissao'
+	})
+	container.append(profissao)
+	container.append(carteiraTrabalho)
+	container.append(salario)
+	container.append("Data de Admissão:")
+	container.append(dataAdmissao)	
 }
 
 function appendPacientForm(container){
-	let plan = elementBuilder('input', {
+	let plano = elementBuilder('input', {
 		class: 'form-control',
+		type: 'text',
 		placeholder: 'Plano',
-		id: 'plan'
+		id: 'plano'
 	})
-	let planType = elementBuilder('input', {
+	let tipoPlano = elementBuilder('input', {
 		class: 'form-control',
+		type: 'text',
 		placeholder: 'Tipo de Plano',
-		id: 'planType'
+		id: 'tipoPlano'
 	})
-	let planCode = elementBuilder('input', {
+	let codigoPlano = elementBuilder('input', {
 		class: 'form-control',
+		type: 'text',
 		placeholder: 'Código de Plano',
-		id: 'planCode'
+		id: 'codigoPlano'
 	})
-	container.append(plan)
-	container.append(planType)
-	container.append(planCode)
+	let validade = elementBuilder('input', {
+		class: 'form-control',
+		type: 'date',
+		id: 'validade'
+	})
+	container.append(plano)
+	container.append(tipoPlano)
+	container.append(codigoPlano)
+	container.append("Data de Validade:")
+	container.append(validade)
 
 }
 
@@ -68,34 +106,55 @@ function elementBuilder(elm, attrs){
 }
 
 function signUp(){
-	let data = buildRow()
-	data && axios.post(`${host}/signUp`, data)
+	/*if (!$('#form-cadastro')[0].checkValidity()){
+		document.getElementById("mensagem").innerHTML = "Preencha o formulário corretamente.";
+		return;
+	}*/
+	var xmlhttp = new FactoryXMLHttpRequest();
+	let data = buildRow();
+	
+	xmlhttp.open('post', `${host}/adicionarUsuario`, true);
+	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	
+	xmlhttp.onload = function () {
+		if (xmlhttp.readyState == 4) {
+			let jsonObj = JSON.parse(xmlhttp.responseText);
+			//document.getElementById("mensagem").innerHTML = "Cadastro realisado com sucesso";
+			window.location = "SignUp.html";
+		}
+	};
+	
+	xmlhttp.send(data);
 }
 
 function buildRow(){
-	let type = document.getElementById("userType").value
-	if(type){
+	let tipo = document.getElementById("tipo").value
+	if(tipo){
 		let row = {
-			cpf: document.getElementById("CPF").value,
-			name: document.getElementById("name").value,
-			password: document.getElementById("password").value,
-			birth: document.getElementById("dateOfBirth").value,
-			expirationDate: document.getElementById("expirationDate").value,
-			type: type
+			cpf: document.getElementById("cpf").value,
+			nome: document.getElementById("nome").value,
+			sexo: document.getElementById("sexo").value,
+			dataNascimento: document.getElementById("dataNascimento").value,
+			telefone: document.getElementById("telefone").value,
+			email: document.getElementById("email").value,
+			tipo: tipo
 		}
-		if(type === 'employee'){
-			row['career'] = document.getElementById('career').value
-			row['workPermit'] = document.getElementById('workPermit').value
-			row['salary'] = document.getElementById('salary').value
-		} else if(type === 'pacient'){
-			row['plan'] = document.getElementById('plan').value
-			row['planType'] = document.getElementById('planType').value
-			row['planCode'] = document.getElementById('planCode').value
+		
+		if(tipo === '1'){
+			row['plano'] = document.getElementById('plano').value
+			row['tipoPlano'] = document.getElementById('tipoPlano').value
+			row['codigoPlano'] = document.getElementById('codigoPlano').value
+			row['validade'] = document.getElementById('validade').value
+		} else if(tipo === '2'){
+			row['profissao'] = document.getElementById('profissao').value
+			row['carteiraTrabalho'] = document.getElementById('carteiraTrabalho').value
+			row['salario'] = document.getElementById('salario').value
+			row['dataAdmissao'] = document.getElementById('dataAdmissao').value
 		}
-
+		
 		return format(row)		
 	}
-	document.alert("Escolha um tipo")
+	document.alert("Escolha um tipo");
 }
 
 function format(row){

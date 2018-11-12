@@ -7,7 +7,8 @@
 	<title>Sign Up</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="../css/SignUp.css">
-	<script src="../js/SignUp.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="../js/Schedule.js"></script>
 	<script src="../js/AutoLogin.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
@@ -18,38 +19,25 @@
 				<a href="Perfil.html" class="nav-link">Perfil </a>
 			</li>
 			<li class="nav-item">
-				<a href="" class="nav-link active">Cadastrar </a>
+				<a href="SignUp.html" class="nav-link">Cadastrar </a>
 			</li>
 			<li class="nav-item">
-				<a href="Schedule.html" class="nav-link">Agendar </a>
+				<a href="" class="nav-link active">Agendar </a>
 			</li>
-
 		</ul>
 		<h3 style= "color: white">Bem Vindo <small id="usuario">vazio</small>!&nbsp;&nbsp;&nbsp;</h3>
 		<input type="button" align="left" class="btn btn-danger" value="Sair" onclick="Sair()">
 	</nav>
 	<form id="form-cadastro" class="form-signin">
 		<div class="text-center">
-			<h1>Cadastro</h1>
+			<h1>Agendamento</h1>
 		</div>
 		<input id="cpf" type="text" class="form-control" placeholder="CPF">
 		<input id="nome" type="text" class="form-control" placeholder="Nome">
-		<select id="sexo" class="form-control">
-			<option value="1" >Masculino</option> 
-			<option value="2">Feminino</option>
-		</select>
-		<label>Data de Nascimento: </label>
-		<input id="dataNascimento" type="date" class="form-control">
-		<input id="telefone" type="text" class="form-control" placeholder="Telefone">
-		<input id="email" type="email" class="form-control" placeholder="mail@mail.com">
-		<label>Tipo de Usuario: </label>
-		<select id="tipo" class="form-control" onchange="changeContainer(this)">
-			<option value="">Select</option>
-			<option value="1">Paciente</option>
-			<option value="2">Funcionario</option>
-		</select>
-		<div id="container"></div>
-		<input type="button" class="btn btn-success" id="btnCadastrar" value="Cadastrar" onclick="signUp()">
+		<label>Data para a consulta: </label>
+		<input id="dataConsulta" type="date" class="form-control">
+		<input type="button" class="btn btn-success" id="btnAgendar" value="Agendar" onclick="schedule()">
+		<p id="teste"></p>
 	</form>
 </body>
 </html>

@@ -1,0 +1,1 @@
+{"senha":"adm123","telefone":"(31)99999-9999","carteiraTrabalho":"0","tipo":2,"salario":0,"cpf":"Administrador","profissao":"Administrador","nome":"Administrador","sexo":true,"dataNascimento":"2018-11-11","dataAdmissao":"2030-12-01","email":"meuEmail@mail.com"}
