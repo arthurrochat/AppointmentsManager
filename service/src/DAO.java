@@ -1,7 +1,7 @@
 
 public interface DAO<T> {
 	
-	void save(T elm);
+	void save(String data);
 	
 	String get(String id);
 	

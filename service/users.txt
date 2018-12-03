@@ -1,0 +1,4 @@
+{"senha":"adm","tipo":2,"nome":"Batata","user":"adm"}
+
+{"senha":"123","tipo":2,"nome":"Arthura","user":"arthur"}
+
